@@ -1,0 +1,26 @@
+.assetImg {
+    margin: 0 auto;
+    width: auto;
+    text-align: center;
+    overflow: hidden;
+}
+p {
+    text-align: justify;
+    font-size: 14px;
+}
+.lastAssets {
+    opacity: 0.5;
+}
+
+.last-assets img {
+    height: 300px;
+}
+
+h3  {
+    font-size: 24px;
+    margin-top:15px;
+}
+
+.row{
+text-align: center;
+}

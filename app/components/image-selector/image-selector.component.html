@@ -1,0 +1,11 @@
+<div class="upload-btn-wrapper">
+  <div class="upload-layer" (click)="fileInput.click()">
+    <div class="select">
+      <span>
+        <b>{{isImageLoaded?'Change Image':'Select Image'}}</b>
+      </span>
+    </div>
+  </div>
+  <img [src]="imagePath" height="200" alt="image" (error)="img.src = '/img/noimg.png'" #img >
+  <input id="file" type="file" name="file" style="display: none;" accept=".jpg, .png, .jpeg |images/*" #fileInput (change)="imageSelected($event)"  />
+</div>

@@ -1,0 +1,7 @@
+<ng-container *ngIf="visible">
+    <div class="container">
+        <h2 class="lastAssets">Recently added {{title}}</h2>
+        <hr>
+        <recently-added-item class="row lastAssetsMain" [recentlyItems]="recentlyItems" [imagesPath]="imagesPath"></recently-added-item>
+    </div>
+</ng-container>

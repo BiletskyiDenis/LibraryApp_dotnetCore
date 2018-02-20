@@ -1,0 +1,72 @@
+<div class="container" [class.blur]="isDeleteConfirm" [@fadeInOut]>
+    <div class="row">
+        <h2>Library Catalogue</h2>
+    </div>
+    <div class="row catalog-header">
+        <div class="header-controls">
+            <div class="dropdown">
+                <a class="btn btn-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Add New
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" routerLink="/addbook">Book</a>
+                    <a class="dropdown-item" routerLink="/addjournal">Journal</a>
+                    <a class="dropdown-item" routerLink="/addbroshore">Broshore</a>
+                </div>
+                <div class="downloadButton">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        Download Selected
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="getSelectedData('xml')">XML</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="getSelectedData('txt')">TXT</a>
+                    </div>
+                </div>
+
+                <button id="fileUpLoadButton" type="button" class="btn btn-info uploadButton" (click)="file.click()">Upload Data</button>
+                <input id="file" type="file" #file style="display: none;" name="file" accept=".txt, .xml" (change)="fileUpload($event)"  />
+            </div>
+
+        </div>
+        <input type="hidden" name="name" value="" />
+    </div>
+    <div class="row">
+        <div class="center-table">
+            <kendo-grid [data]="gridData" [skip]="skip" (selectionChange)="onSelect($event)" [selectable]="true" (pageChange)="pageChange($event)" [height]="500" class="table table-hover table-catalog">
+                <kendo-grid-checkbox-column showSelectAll="true"></kendo-grid-checkbox-column>
+                <kendo-grid-column field=Image title="Image" [width]="100">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <img [src]="imagesPath+dataItem.imageUrl" (error)="img.src = '/img/none_small.png'" #img>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="title" title="Title" [width]="400">
+                </kendo-grid-column>
+                <kendo-grid-column field="author" title="Author" [width]="300">
+                </kendo-grid-column>
+                <kendo-grid-column field="type" title="Type" [width]="50">
+                </kendo-grid-column>
+                <kendo-grid-column [width]="200">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <a [routerLink]="dataItem.type=='Book'?['/editbook', dataItem.id]:
+                                         dataItem.type=='Journal'?'/editjournal/'+dataItem.id:
+                                         dataItem.type=='Brochure'?'/editbrochure/'+dataItem.id: '/' ">Edit</a> |
+                        <a [routerLink]="'/details/'+dataItem.id">Details</a> |
+                        <a href="javascript:void(0)" (click)="deleteConfirm(dataItem)">Delete</a>
+
+                    </ng-template>
+                </kendo-grid-column>
+            </kendo-grid>
+
+        </div>
+    </div>
+</div>
+
+<delete-confirm 
+        [isShow]="isDeleteConfirm"
+        [deleteItem]="deleteItem"
+        [imagesPath]="imagesPath"
+        (onDelete)="deleteConfirmed($event)"
+></delete-confirm>

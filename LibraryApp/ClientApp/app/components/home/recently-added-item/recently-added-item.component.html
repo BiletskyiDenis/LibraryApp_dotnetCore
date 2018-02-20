@@ -1,0 +1,12 @@
+<div class="col-md last-assets" *ngFor="let item of recentlyItems;">
+    <div class="assetImg">
+        <img src="{{imagesPath+item.imageUrl}}" (error)="img.src = '/img/none.jpg'" #img alt="">
+    </div>
+    <h3>{{item.title}}</h3>
+    <p>
+        {{item.description}}
+    </p>
+    <p>
+        <a routerLink="/details/{{item.id}}"class="btn btn-light">View Details</a>
+    </p>
+</div>
