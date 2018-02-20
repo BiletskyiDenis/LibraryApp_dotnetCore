@@ -1,9 +1,0 @@
-.container{
-    opacity: 0;
-}
-
-.showIn{
-    opacity: 1;
-    -webkit-transition: all 0.1s 0.01s ease-in-out;
-    transition: all 0.1s 0.01s ease-in-out;
-}
