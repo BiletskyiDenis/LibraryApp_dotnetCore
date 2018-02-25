@@ -17,8 +17,8 @@ namespace LibraryApp.Controllers
     [Route("api/Journal")]
     public class JournalController : BaseAssetController<Journal>
     {
-        public JournalController(ILibraryDataService assets, IImageHandlerService imageService, IHostingEnvironment appEnvironment) 
-            : base(assets, imageService, appEnvironment)
+        public JournalController(ILibraryDataService libraryDataService, IImageHandlerService imageService, IHostingEnvironment appEnvironment) 
+            : base(libraryDataService, imageService, appEnvironment)
         {
         }
 
@@ -26,20 +26,20 @@ namespace LibraryApp.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(_assets.GetBooks().Dto<DtoJournal>());
+            return Json(_libraryDataService.GetAssetsFromType(AssetType.Journal).Dto<JournalViewModel>());
         }
 
         // GET: api/Journal/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var asset = _assets.GetById(id);
+            var asset = _libraryDataService.GetAsset(id);
             if (!(asset is Journal))
             {
                 return NotFound();
             }
 
-            return Json(asset.Dto<DtoJournal>());
+            return Json(asset.Dto<JournalViewModel>());
         }
     }
 }

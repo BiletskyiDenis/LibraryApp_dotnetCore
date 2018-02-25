@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibraryData;
 using LibraryServices;
+using LibraryServices.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -27,6 +28,7 @@ namespace LibraryApp
         {
             services.AddMvc();
             services.AddSingleton(Configuration);
+            services.Configure<ImageServiceOptions>(Configuration.GetSection("ImageService"));
             services.AddScoped<ILibraryDataService, LibraryDataService>();
             services.AddScoped<IDataFileService, DataFileService>();
             services.AddScoped<IImageHandlerService, ImageHandlerService>();
@@ -36,7 +38,7 @@ namespace LibraryApp
             //    => options.UseSqlServer(Configuration.GetConnectionString("LibraryConnection")));
 
             //use REMOTE connection MSSQLLocalDB
-            services.AddDbContext<LibraryContext>(options 
+            services.AddDbContext<LibraryContext>(options
                 => options.UseSqlServer(Configuration.GetConnectionString("LibraryConnectionRemote")));
         }
 

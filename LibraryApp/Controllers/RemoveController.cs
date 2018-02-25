@@ -14,13 +14,13 @@ namespace LibraryApp.Controllers
     [Route("api/Delete")]
     public class RemoveController : Controller
     {
-        protected readonly ILibraryDataService _assets;
+        protected readonly ILibraryDataService _libraryDataService;
         protected readonly IImageHandlerService _imageService;
         protected readonly IHostingEnvironment _appEnvironment;
 
-        public RemoveController(ILibraryDataService assets, IImageHandlerService imageService, IHostingEnvironment appEnvironment)
+        public RemoveController(ILibraryDataService libraryDataService, IImageHandlerService imageService, IHostingEnvironment appEnvironment)
         {
-            this._assets = assets;
+            this._libraryDataService = libraryDataService;
             this._imageService = imageService;
             this._appEnvironment = appEnvironment;
         }
@@ -28,12 +28,8 @@ namespace LibraryApp.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var asset = _assets.GetById(id);
+            var asset = _libraryDataService.GetAsset(id);
             if (asset == null)
-            {
-                return NotFound();
-            }
-            if (!_assets.DeleteAsset(asset))
             {
                 return NotFound();
             }
@@ -43,7 +39,7 @@ namespace LibraryApp.Controllers
                 _imageService.DeleteImage(_appEnvironment.WebRootPath, asset.ImageUrl);
             }
 
-            _assets.Save();
+            _libraryDataService.RemoveAsset(asset);
 
             return Ok();
         }

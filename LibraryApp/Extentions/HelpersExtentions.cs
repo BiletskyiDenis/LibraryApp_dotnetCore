@@ -9,7 +9,6 @@ namespace LibraryApp.Extentions
 {
     public static class HelpersExtentions
     {
-
         public static T GetAsset<T>(this string data) where T : LibraryAsset
         {
             if (data==string.Empty)

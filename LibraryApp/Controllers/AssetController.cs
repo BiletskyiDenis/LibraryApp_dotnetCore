@@ -8,6 +8,8 @@ using LibraryApp.Extentions;
 using LibraryApp.Models;
 using LibraryApp.Models.Catalog;
 using LibraryData;
+using LibraryData.Models;
+using LibraryServices;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,48 +20,36 @@ namespace LibraryApp.Controllers
     [Route("api/Asset")]
     public class AssetController : Controller
     {
-        protected readonly ILibraryDataService _assets;
+        protected readonly ILibraryDataService _libraryDataService;
 
-        public AssetController(ILibraryDataService assets)
+        public AssetController(ILibraryDataService libraryDataService)
         {
-            this._assets = assets;
+            this._libraryDataService = libraryDataService;
         }
 
         [HttpGet("RecentlyAdded/{type}")]
         public IActionResult RecentlyAdded(string type)
         {
-            var assetType = type.ToLower();
+            AssetType assetType;
+            Enum.TryParse(type, true, out assetType);
+            var asset = _libraryDataService.GetAssetsFromType(assetType);
 
-            if (assetType == "book")
-            {
-                return Json(_assets.GetBooks().DtoRecentlyAdded());
-            }
-
-            if (assetType == "journal")
-            {
-                return Json(_assets.GetJournals().DtoRecentlyAdded());
-            }
-
-            if (assetType == "brochure")
-            {
-                return Json(_assets.GetBrochures().DtoRecentlyAdded());
-            }
-
-            return NotFound();
+            return Json(asset.DtoRecentlyAdded());
         }
 
         [HttpGet("Details/{id}")]
         public IActionResult Details(int id)
         {
-            var asset = _assets.GetById(id);
+            var asset = _libraryDataService.GetAsset(id);
+
             if (asset == null)
             {
                 return NotFound();
             }
-            var type = _assets.GetType(id).ToString().ToLower();
 
-            var dto = asset.Dto<DtoDetailModel>();
-            dto.Type = type;
+            var dto = asset.Dto<DetailViewModel>();
+            dto.Type = _libraryDataService.GetType(id).ToString().ToLower();
+
             return Json(dto);
         }
 
@@ -67,21 +57,8 @@ namespace LibraryApp.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var assetModels = _assets.GetAll();
-            var listingResult = assetModels.Select(
-                result => new AssetIndexListingModel
-                {
-                    Id = result.Id,
-                    Title = result.Title,
-                    Author = _assets.GetAuthor(result.Id),
-                    ImageUrl = result.ImageUrl,
-                    Price = result.Price,
-                    NumberOfCopies = result.NumbersOfCopies,
-                    Type = _assets.GetType(result.Id).ToString(),
-                    Publisher = result.Publisher
-                });
-
-            return Json(listingResult);
+            var assets = _libraryDataService.GelAllAssets();
+            return Json(assets);
         }
     }
 }

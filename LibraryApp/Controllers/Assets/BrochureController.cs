@@ -17,8 +17,8 @@ namespace LibraryApp.Controllers
     [Route("api/Brochure")]
     public class BrochureController : BaseAssetController<Brochure>
     {
-        public BrochureController(ILibraryDataService assets, IImageHandlerService imageService, IHostingEnvironment appEnvironment) 
-            : base(assets, imageService, appEnvironment)
+        public BrochureController(ILibraryDataService libraryDataService, IImageHandlerService imageService, IHostingEnvironment appEnvironment) 
+            : base(libraryDataService, imageService, appEnvironment)
         {
         }
 
@@ -26,20 +26,20 @@ namespace LibraryApp.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(_assets.GetBooks().Dto<DtoBrochure>());
+            return Json(_libraryDataService.GetAssetsFromType(AssetType.Brochure).Dto<BrochureViewModel>());
         }
 
         // GET: api/Brochure/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var asset = _assets.GetById(id);
+            var asset = _libraryDataService.GetAsset(id);
             if (!(asset is Brochure))
             {
                 return NotFound();
             }
 
-            return Json(asset.Dto<DtoBrochure>());
+            return Json(asset.Dto<BrochureViewModel>());
         }
     }
 }

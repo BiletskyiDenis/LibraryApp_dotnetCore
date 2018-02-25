@@ -1,6 +1,6 @@
 ﻿namespace LibraryApp.Models.Catalog
 {
-    public class AssetDeleteConfirmModel
+    public class AssetDeleteConfirmViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

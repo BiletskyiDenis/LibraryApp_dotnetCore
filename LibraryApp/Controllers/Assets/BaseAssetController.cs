@@ -15,13 +15,13 @@ namespace LibraryApp.Controllers
 {
     public class BaseAssetController<T> : Controller where T : LibraryAsset
     {
-        protected readonly ILibraryDataService _assets;
+        protected readonly ILibraryDataService _libraryDataService;
         protected readonly IImageHandlerService _imageService;
         protected readonly IHostingEnvironment _appEnvironment;
 
-        public BaseAssetController(ILibraryDataService assets, IImageHandlerService imageService, IHostingEnvironment appEnvironment)
+        public BaseAssetController(ILibraryDataService libraryDataService, IImageHandlerService imageService, IHostingEnvironment appEnvironment)
         {
-            this._assets = assets;
+            this._libraryDataService = libraryDataService;
             this._imageService = imageService;
             this._appEnvironment = appEnvironment;
         }
@@ -53,13 +53,11 @@ namespace LibraryApp.Controllers
 
             if (lbAsset.Id > 0)
             {
-                _assets.UpdateAsset(lbAsset);
-                _assets.Save();
+                _libraryDataService.UpdateAsset(lbAsset);
                 return Ok();
             }
 
-            _assets.AddAsset(lbAsset);
-            _assets.Save();
+            _libraryDataService.AddAsset(lbAsset);
             return Ok();
         }
     }

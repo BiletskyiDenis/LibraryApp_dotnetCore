@@ -1,6 +1,6 @@
 ﻿namespace LibraryApp.Models
 {
-    public class DtoRecentlyAdded
+    public class RecentlyAddedViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

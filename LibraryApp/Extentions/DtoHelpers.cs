@@ -46,9 +46,9 @@ namespace LibraryApp.Extentions
             return asset.Select(s => s.Dto<T>());
         }
 
-        public static IEnumerable<DtoRecentlyAdded> DtoRecentlyAdded(this IEnumerable<LibraryAsset> asset, int maxChars = 300)
+        public static IEnumerable<RecentlyAddedViewModel> DtoRecentlyAdded(this IEnumerable<LibraryAsset> asset,int recentlyAddedCount=3, int maxChars = 300)
         {
-            return asset.Reverse().Take(3).Select(s => new DtoRecentlyAdded()
+            return asset.Reverse().Take(recentlyAddedCount).Select(s => new RecentlyAddedViewModel()
             {
                 Id = s.Id,
                 Title = s.Title,
