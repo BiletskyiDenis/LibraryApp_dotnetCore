@@ -54,10 +54,13 @@ namespace LibraryApp.Controllers
             if (lbAsset.Id > 0)
             {
                 _libraryDataService.UpdateAsset(lbAsset);
+                _libraryDataService.SaveChanges();
+
                 return Ok();
             }
 
             _libraryDataService.AddAsset(lbAsset);
+            _libraryDataService.SaveChanges();
             return Ok();
         }
     }

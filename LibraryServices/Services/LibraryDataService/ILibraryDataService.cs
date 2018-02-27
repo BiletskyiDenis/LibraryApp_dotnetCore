@@ -12,11 +12,11 @@ namespace LibraryServices
         LibraryAsset GetAsset(int id);
         IEnumerable<LibraryAsset> GetSelected(int[] selected);
         IEnumerable<LibraryAsset> GetAssetsFromType(AssetType type);
-        void UpdateAsset(LibraryAsset asset, bool permanentSaveChanges = true);
-        void AddAsset(LibraryAsset asset, bool permanentSaveChanges = true);
-        void AddAssetsRange(IEnumerable<LibraryAsset> assets, bool permanentSaveChanges = true);
-        void RemoveAsset(LibraryAsset asset, bool permanentSaveChanges = true);
-        void RemoveAsset(int id, bool permanentSaveChanges = true);
+        void UpdateAsset(LibraryAsset asset);
+        void AddAsset(LibraryAsset asset);
+        void AddAssetsRange(IEnumerable<LibraryAsset> assets);
+        void RemoveAsset(LibraryAsset asset);
+        void RemoveAsset(int id);
         AssetType GetType(int? id);
         void SaveChanges();
     }

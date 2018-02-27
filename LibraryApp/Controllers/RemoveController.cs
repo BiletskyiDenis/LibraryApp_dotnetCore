@@ -40,7 +40,7 @@ namespace LibraryApp.Controllers
             }
 
             _libraryDataService.RemoveAsset(asset);
-
+            _libraryDataService.SaveChanges();
             return Ok();
         }
     }

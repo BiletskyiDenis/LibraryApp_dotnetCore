@@ -281,6 +281,7 @@ namespace LibraryServices
                     var asset = RestoreFromXml(xmlDocument.Elements().FirstOrDefault());
 
                     libraryDataService.AddAsset(asset);
+                    libraryDataService.SaveChanges();
 
                     return;
                 }
@@ -288,6 +289,7 @@ namespace LibraryServices
                 var assets = RestoreAssetsListFromXml(xmlDocument);
 
                 libraryDataService.AddAssetsRange(assets);
+                libraryDataService.SaveChanges();
             }
         }
 
@@ -307,6 +309,7 @@ namespace LibraryServices
                     var asset = RestoreFromTxt(txtData);
 
                     libraryDataService.AddAsset(asset);
+                    libraryDataService.SaveChanges();
 
                     return;
                 }
@@ -314,6 +317,7 @@ namespace LibraryServices
                 var assets = RestoreAssetsListFromTxt(txtData);
 
                 libraryDataService.AddAssetsRange(assets);
+                libraryDataService.SaveChanges();
             }
         }
     }

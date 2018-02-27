@@ -16,24 +16,14 @@ namespace LibraryServices
             this._unitOfWork = new UnitOfWork(context);
         }
 
-        public void AddAsset(LibraryAsset asset, bool permanentSaveChanges = true)
+        public void AddAsset(LibraryAsset asset)
         {
             _unitOfWork.Library.Add(asset);
-
-            if (permanentSaveChanges)
-            {
-                SaveChanges();
-            }
         }
 
-        public void AddAssetsRange(IEnumerable<LibraryAsset> assets, bool permanentSaveChanges = true)
+        public void AddAssetsRange(IEnumerable<LibraryAsset> assets)
         {
             _unitOfWork.Library.AddRange(assets);
-
-            if (permanentSaveChanges)
-            {
-                SaveChanges();
-            }
         }
 
         public IEnumerable<AssetViewModel> GelAllAssets()
@@ -73,25 +63,15 @@ namespace LibraryServices
             return null;
         }
 
-        public void RemoveAsset(LibraryAsset asset, bool permanentSaveChanges = true)
+        public void RemoveAsset(LibraryAsset asset)
         {
             _unitOfWork.Library.Remove(asset);
-
-            if (permanentSaveChanges)
-            {
-                SaveChanges();
-            }
         }
 
-        public void RemoveAsset(int id, bool permanentSaveChanges = true)
+        public void RemoveAsset(int id)
         {
             var asset = _unitOfWork.Library.GetById(id);
             _unitOfWork.Library.Remove(asset);
-
-            if (permanentSaveChanges)
-            {
-                SaveChanges();
-            }
         }
 
         public LibraryAsset GetAsset(int id)
@@ -99,14 +79,9 @@ namespace LibraryServices
             return _unitOfWork.Library.GetById(id);
         }
 
-        public void UpdateAsset(LibraryAsset asset, bool permanentSaveChanges = true)
+        public void UpdateAsset(LibraryAsset asset)
         {
             _unitOfWork.Library.Update(asset);
-
-            if (permanentSaveChanges)
-            {
-                SaveChanges();
-            }
         }
 
         public AssetType GetType(int? id)
