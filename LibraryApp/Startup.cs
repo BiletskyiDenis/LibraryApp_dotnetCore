@@ -35,7 +35,7 @@ namespace LibraryApp
 
             //use LOCAL connection MSSQLLocalDB
             //services.AddDbContext<LibraryContext>(options
-            //    => options.UseSqlServer(Configuration.GetConnectionString("LibraryConnection")));
+            //    => options.UseSqlServer(Configuration.GetConnectionString("LibraryConnectionLocal")));
 
             //use REMOTE connection MSSQLLocalDB
             services.AddDbContext<LibraryContext>(options
