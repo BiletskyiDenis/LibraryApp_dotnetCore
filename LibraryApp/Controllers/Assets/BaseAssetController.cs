@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Threading.Tasks;
+using BusinessLogic.services;
+using Domain.Models;
 using LibraryApp.Extentions;
-using LibraryData;
-using LibraryData.Models;
-using LibraryServices;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +26,7 @@ namespace LibraryApp.Controllers
         [HttpPut]
         public virtual async Task<IActionResult> PostPut(string asset, IFormFileCollection file)
         {
-            var lbAsset = asset.GetAsset<T>();
+            var lbAsset = asset.DeserializeAsset<T>();
 
             if (lbAsset.ImageUrl == string.Empty)
                 lbAsset.ImageUrl = "none";

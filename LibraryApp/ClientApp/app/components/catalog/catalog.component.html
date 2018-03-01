@@ -43,8 +43,14 @@
                     </ng-template>
                 </kendo-grid-column>
                 <kendo-grid-column field="title" title="Title" [width]="400">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <p class="title">{{dataItem.title}}</p>
+                    </ng-template>
                 </kendo-grid-column>
-                <kendo-grid-column field="author" title="Author" [width]="300">
+                <kendo-grid-column field="author" title="Author" id="author" [width]="300">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <p class="author">{{dataItem.author}}</p>
+                    </ng-template>
                 </kendo-grid-column>
                 <kendo-grid-column field="type" title="Type" [width]="50">
                 </kendo-grid-column>

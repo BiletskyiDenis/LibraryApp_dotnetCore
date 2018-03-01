@@ -1,4 +1,4 @@
-<div class="col-md last-assets" *ngFor="let item of recentlyItems;">
+<div class="col-md-4 last-assets" *ngFor="let item of recentlyItems;">
     <div class="assetImg">
         <img src="{{imagesPath+item.imageUrl}}" (error)="img.src = '/img/none.jpg'" #img alt="">
     </div>

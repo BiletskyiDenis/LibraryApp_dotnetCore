@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LibraryApp.Extentions;
-using LibraryApp.Models;
-using LibraryData;
-using LibraryData.Models;
-using LibraryServices;
+﻿using BusinessLogic.services;
+using DataAccess.Mappers;
+using Domain.Enums;
+using Domain.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ViewModel;
 
 namespace LibraryApp.Controllers
 {
@@ -26,7 +21,7 @@ namespace LibraryApp.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(_libraryDataService.GetAssetsFromType(AssetType.Journal).Dto<JournalViewModel>());
+            return Json(_libraryDataService.GetAssetsFromType(AssetType.Journal).DtoMap<JournalViewModel>());
         }
 
         // GET: api/Journal/5
@@ -39,7 +34,7 @@ namespace LibraryApp.Controllers
                 return NotFound();
             }
 
-            return Json(asset.Dto<JournalViewModel>());
+            return Json(asset.DtoMap<JournalViewModel>());
         }
     }
 }

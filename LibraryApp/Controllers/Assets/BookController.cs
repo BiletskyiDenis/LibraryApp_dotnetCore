@@ -1,16 +1,10 @@
-﻿using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using LibraryApp.Extentions;
-using LibraryApp.Models;
-using LibraryData;
-using LibraryData.Models;
-using LibraryServices;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
+using Domain.Models;
+using BusinessLogic.services;
+using Domain.Enums;
+using ViewModel;
+using DataAccess.Mappers;
 
 namespace LibraryApp.Controllers
 {
@@ -27,7 +21,7 @@ namespace LibraryApp.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(_libraryDataService.GetAssetsFromType(AssetType.Book).Dto<BookViewModel>());
+            return Json(_libraryDataService.GetAssetsFromType(AssetType.Book).DtoMap<BookViewModel>());
         }
 
         // GET: api/Book/5
@@ -40,7 +34,7 @@ namespace LibraryApp.Controllers
                 return NotFound();
             }
 
-            return Json(asset.Dto<BookViewModel>());
+            return Json(asset.DtoMap<BookViewModel>());
         }
     }
 }

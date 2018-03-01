@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using LibraryApp.Extentions;
-using LibraryApp.Models;
-using LibraryApp.Models.Catalog;
-using LibraryData;
-using LibraryData.Models;
-using LibraryServices;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using BusinessLogic.services;
+using DataAccess.Mappers;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
+using ViewModel;
 
 namespace LibraryApp.Controllers
 {
@@ -32,9 +23,9 @@ namespace LibraryApp.Controllers
         {
             AssetType assetType;
             Enum.TryParse(type, true, out assetType);
-            var asset = _libraryDataService.GetAssetsFromType(assetType);
+            var asset = _libraryDataService.GetAssetsFromType(assetType).DtoRecentlyAdded();
 
-            return Json(asset.DtoRecentlyAdded());
+            return Json(asset);
         }
 
         [HttpGet("Details/{id}")]
@@ -47,10 +38,10 @@ namespace LibraryApp.Controllers
                 return NotFound();
             }
 
-            var dto = asset.Dto<DetailViewModel>();
-            dto.Type = _libraryDataService.GetType(id).ToString().ToLower();
+            var dtoAsset = asset.DtoMap<DetailViewModel>();
+            dtoAsset.Type = _libraryDataService.GetType(id).ToString().ToLower();
 
-            return Json(dto);
+            return Json(dtoAsset);
         }
 
         // GET: api/Asset
@@ -58,6 +49,7 @@ namespace LibraryApp.Controllers
         public IActionResult Get()
         {
             var assets = _libraryDataService.GelAllAssets();
+
             return Json(assets);
         }
     }
