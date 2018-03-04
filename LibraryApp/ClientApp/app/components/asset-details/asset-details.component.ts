@@ -9,67 +9,64 @@ import { style, state, animate, transition, trigger } from '@angular/core';
 
 @Component({
     selector: 'asset-details',
-  templateUrl: './asset-details.component.html',
-  styleUrls: ['./asset-details.component.css'],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(100, style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate(100, style({ opacity: 0 }))
-      ])
-    ])
-  ]
+    templateUrl: './asset-details.component.html',
+    styleUrls: ['./asset-details.component.css'],
+    animations: [
+        trigger('fadeInOut', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate(100, style({ opacity: 1 }))
+            ]),
+            transition(':leave', [
+                animate(100, style({ opacity: 0 }))
+            ])
+        ])
+    ]
 })
 
 
 export class DetailsComponent implements OnInit {
 
-  private id: number;
-  private route$: Subscription;
-  isDataLoaded: boolean = false;
+    private id: number;
+    private route$: Subscription;
 
-  imageNoneUrl:string;
+    isDataLoaded: boolean = false;
+    imagesHostPath: string;
+    details: IDetails;
 
-  details: IDetails = {
-    author: '', country: '', description: '', frequency: '', genre: '', id: 0, isbn: '',
-    imageUrl: '', language: '', numbersOfCopies: 0, pages: 0, price: 0, publisher: '',
-    title: '', type: '', year: 0
-  };
+    constructor(private libraryService: LibraryService, private route: ActivatedRoute) {
+        this.imagesHostPath = this.libraryService.imagesHostPath;
+        this.details = {
+            author: '', country: '', description: '', frequency: '', genre: '', id: 0, isbn: '',
+            imageUrl: '', language: '', numbersOfCopies: 0, pages: 0, price: 0, publisher: '',
+            title: '', type: '', year: 0
+        };
+    }
 
-  imagesHostPath: string;
+    ngOnInit(): void {
+        this.route$ = this.route.params.subscribe(
+            (params: Params) => {
+                this.id = +params["id"];
+                if (this.id == 0) {
+                    return;
+                }
+                this.libraryService.getDetails(this.id).subscribe(
+                    data => {
+                        this.details = data;
+                        this.isDataLoaded = true;
+                    }
+                )
 
-
-  constructor(private libraryService: LibraryService, private route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-    this.imagesHostPath = this.libraryService.imagesHostPath;
-    this.imageNoneUrl=this.libraryService.imageNoneUrl;
-
-    this.route$ = this.route.params.subscribe(
-      (params: Params) => {
-        this.id = +params["id"];
-        if (this.id > 0) {
-
-          this.libraryService.getDetails(this.id).subscribe(
-            data => {
-                this.details = data;
-              this.isDataLoaded = true;
             }
-          )
-        }
-      }
-    );
-  }
+        );
+    }
 
-  ngOnDestroy() {
-    if (this.route$) this.route$.unsubscribe();
-  }
+    downloadfile(type: string) {
+        this.libraryService.downloadFile(this.id, type);
+    }
 
-  downloadfile(type: string) {
-    this.libraryService.downloadFile(this.id, type);
-  }
+    ngOnDestroy() {
+        if (this.route$) this.route$.unsubscribe();
+    }
 
 }

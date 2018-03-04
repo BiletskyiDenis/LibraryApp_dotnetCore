@@ -35,7 +35,6 @@ export class CatalogComponent {
     private pageSize: number = 10;
     private skip: number = 0;
 
-    imageSmallNoneUrl: string;
     imagesPath: string;
 
     deleteItem: IAssetListItem;
@@ -43,14 +42,12 @@ export class CatalogComponent {
     isDeleteConfirm: boolean;
 
     constructor(private libraryService: LibraryService, private resourceService: ResourceService) {
-        this.imageSmallNoneUrl = this.libraryService.imageSmallNoneUrl;
-        this.loadItems()
+        this.loadItems();
+        this.imagesPath = this.libraryService.smallImagesHostPath;
     }
 
     ngOnInit() {
-        this.imagesPath = this.libraryService.smallImagesHostPath;
         this.getAsserList();
-
     }
 
     protected pageChange(event: PageChangeEvent): void {
@@ -71,8 +68,7 @@ export class CatalogComponent {
             data => {
                 this.resourceService.set('assetsList', data)
                 this.gridData = this.resourceService.get('assetsList');
-            }
-        )
+            });
     }
 
     deleteConfirm(item: IAssetListItem, img: string) {
@@ -97,7 +93,6 @@ export class CatalogComponent {
         )
     }
 
-
     onClick(id: number): void {
         this.libraryService.deleteAsset(id).subscribe(
             data => {
@@ -106,17 +101,16 @@ export class CatalogComponent {
         );
     }
 
-    fileUpload(event:any) {
+    fileUpload(event: any) {
         let url: string = this.libraryService.host + '/api/UploadData';
         let data: FormData = new FormData();
         data.append('file', event.target.files[0], event.target.files[0].name)
         let xhr: XMLHttpRequest = new XMLHttpRequest();
 
         xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    this.getAsserList();
-                }
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                this.getAsserList();
+
             }
         };
 
@@ -125,8 +119,7 @@ export class CatalogComponent {
         xhr.send(data);
     }
 
-    onSelect(event:any) {
-
+    onSelect(event: any) {
         for (let i = 0; i < event.deselectedRows.length; i++) {
             this.selectedItems = this.selectedItems.filter(x => x != event.deselectedRows[i].dataItem.id);
         }

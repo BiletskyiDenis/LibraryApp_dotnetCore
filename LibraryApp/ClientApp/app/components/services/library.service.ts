@@ -28,7 +28,6 @@ export class LibraryService {
     private imagesPath: string = '/img/assets/';
     private smallImagesPath: string = '/img/assets_small/';
 
-
     handleError: any;
 
     get imagesHostPath() {
@@ -100,10 +99,8 @@ export class LibraryService {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
 
         xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    this.router.navigate(['/catalog']);
-                }
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                this.router.navigate(['/catalog']);
             }
         };
 
@@ -122,14 +119,14 @@ export class LibraryService {
         this.downloadData(dataFile, '/api/DownloadSelected');
     }
 
-    downloadData(data:any, apiUrl:any) {
+    downloadData(data: any, apiUrl: any) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", this.host + apiUrl, true);
         xhr.responseType = 'blob';
         xhr.setRequestHeader('Content-type', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                var contentDisposition:any = xhr.getResponseHeader('Content-Disposition');
+                var contentDisposition: any = xhr.getResponseHeader('Content-Disposition');
                 var fileName = contentDisposition.split(';')[1].split('filename')[1].split('=')[1].trim();
                 var blob = new Blob([this.response], { type: 'application/octet-stream' });
                 saveAs(blob, fileName);

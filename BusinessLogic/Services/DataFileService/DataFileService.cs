@@ -26,11 +26,13 @@ namespace BusinessLogic.services
                 if (fileExt == ".xml")
                 {
                     RestoreAssetFromXml(data, libraryDataService);
+                    return;
                 }
 
                 if (fileExt == ".txt")
                 {
                     RestoreAssetFromTxt(data, libraryDataService);
+                    return;
                 }
 
                 throw new Exception("Incorrect file type");
@@ -85,8 +87,8 @@ namespace BusinessLogic.services
 
         private IEnumerable<LibraryAsset> RestoreAssetsListFromTxt(string document)
         {
-            var data = document.Split('#').Where((s, i) => i > 0).ToArray();
-            var restoredAssets = data.Select(s => RestoreFromTxt(s));
+            var txtData = document.Split('#').Where((s, i) => i > 0).ToArray();
+            var restoredAssets = txtData.Select(s => RestoreFromTxt(s));
 
             return restoredAssets;
         }
@@ -111,22 +113,22 @@ namespace BusinessLogic.services
 
         private byte[] GetXmlFile<T>(T asset) where T : LibraryAsset
         {
-            var document = new XDocument();
-            document.Add(GetXml(asset));
-            var xmlFile = Encoding.UTF8.GetBytes(document.ToString());
+            var xmlDocument = new XDocument();
+            xmlDocument.Add(GetXml(asset));
+            var xmlFile = Encoding.UTF8.GetBytes(xmlDocument.ToString());
             return xmlFile;
         }
 
         private byte[] GetXmlListFile<T>(IEnumerable<T> assetsList) where T : LibraryAsset
         {
-            var document = new XDocument();
+            var xmlDocument = new XDocument();
             var list = new XElement("List");
             foreach (var asset in assetsList)
             {
                 list.Add(GetXml(asset));
             }
-            document.Add(list);
-            var xmlFile = Encoding.UTF8.GetBytes(document.ToString());
+            xmlDocument.Add(list);
+            var xmlFile = Encoding.UTF8.GetBytes(xmlDocument.ToString());
             return xmlFile;
         }
 
@@ -178,8 +180,8 @@ namespace BusinessLogic.services
 
         private LibraryAsset RestoreFromTxt(string txtDocument)
         {
-            var assetData = txtDocument.Split('[', ']').Select(s => s.Replace(Environment.NewLine, string.Empty)).ToArray();
-            var asset = GetAssetFromType(assetData[1]);
+            var txtData = txtDocument.Split('[', ']').Select(s => s.Replace(Environment.NewLine, string.Empty)).ToArray();
+            var asset = GetAssetFromType(txtData[1]);
 
             if (asset == null)
             {
@@ -191,7 +193,7 @@ namespace BusinessLogic.services
 
             foreach (var field in fields)
             {
-                SetFieldValueTxt(asset, field, assetData);
+                SetFieldValueTxt(asset, field, txtData);
             }
 
             return asset;
@@ -227,25 +229,25 @@ namespace BusinessLogic.services
             return asset;
         }
 
-        private void SetFieldValueXml(LibraryAsset asset, PropertyInfo field, XElement xElement)
+        private void SetFieldValueXml(LibraryAsset asset, PropertyInfo field, XElement xmlDocument)
         {
-            foreach (var item in xElement.Elements())
+            foreach (var xElement in xmlDocument.Elements())
             {
-                if (field.Name == item.Name)
+                if (field.Name == xElement.Name)
                 {
-                    field.SetValue(asset, Convert.ChangeType(item.Value, field.PropertyType, CultureInfo.InvariantCulture));
+                    field.SetValue(asset, Convert.ChangeType(xElement.Value, field.PropertyType, CultureInfo.InvariantCulture));
                     break;
                 }
             }
         }
 
-        private void SetFieldValueTxt(LibraryAsset asset, PropertyInfo field, string[] assetData)
+        private void SetFieldValueTxt(LibraryAsset asset, PropertyInfo field, string[] txtData)
         {
-            for (int i = 0; i < assetData.Length; i++)
+            for (int i = 0; i < txtData.Length; i++)
             {
-                if (field.Name != "Id" && field.Name == assetData[i])
+                if (field.Name != "Id" && field.Name == txtData[i])
                 {
-                    field.SetValue(asset, Convert.ChangeType(assetData[i + 1], field.PropertyType));
+                    field.SetValue(asset, Convert.ChangeType(txtData[i + 1], field.PropertyType));
                     break;
                 }
             }

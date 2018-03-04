@@ -1,5 +1,5 @@
 <div class="container body-content" [class.showIn]="isDataLoaded">
-    <form [formGroup]="form" (ngSubmit)="submit(form.value)" validate>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
         <div class="form-horizontal">
             <h4>{{isEdit?'Edit Brochure': 'Add New Brochure'}}</h4>
             <hr />
@@ -7,83 +7,75 @@
                 <div class="col-md">
                     <div class="col-md">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" formControlName="title" placeholder="Brochure title" required>
+                        <input required [(ngModel)]="brochure.title" name="title" type="text" class="form-control"  placeholder="Brochure title">
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md">
-                    <input type="hidden" formControlName="id">
-                    <input type="hidden" formControlName="imageUrl">
-
+                    <input type="hidden" [(ngModel)]="brochure.id" name="id">
+                    <input type="hidden" [(ngModel)]="brochure.imageUrl" name="imageUrl">
                     <div class="col-md">
                         <label for="genre">Category</label>
-                        <input type="text" class="form-control" placeholder="Sport, food, travel, ets... " maxlength="50" formControlName="genre"
-                            required>
+                        <input required [(ngModel)]="brochure.genre" name="genre" type="text" class="form-control" placeholder="Sport, food, travel, ets... " maxlength="50"/>
                     </div>
-
                     <div class="col-md">
                         <label for="year">Year</label>
-                        <input type="number" class="form-control" placeholder="Year published" max="3000" formControlName="year" required>
+                        <input required [(ngModel)]="brochure.year" name="year" type="text" class="form-control" placeholder="Year published"
+                               pattern="^[0-9]*$"
+                               maxlength="4" />
                     </div>
-
                     <div class="col-md">
                         <label for="price">Price</label>
-                        <input type="number" class="form-control" formControlName="price" placeholder="Like 0.00" max="1000000" value="0" required>
+                        <input required [(ngModel)]="brochure.price" name="price" type="text" class="form-control" placeholder="Like 0.00"
+                               pattern="^[0-9]+\.?[0-9]*$"
+                               maxlength="6" />
                     </div>
-
                 </div>
                 <div class="col-md">
                     <div class="col-md">
                         <label for="language">Language</label>
-                        <input type="text" class="form-control" placeholder="Language" maxlength="100" formControlName="language" required>
+                        <input required [(ngModel)]="brochure.language" name="language" type="text" class="form-control" placeholder="Language" maxlength="100" />
                     </div>
-
                     <div class="col-md ">
                         <label for="publisher">Publisher</label>
-                        <input type="text" class="form-control" placeholder="Brochure publisher" maxlength="100" formControlName="publisher" required>
+                        <input required [(ngModel)]="brochure.publisher" name="publisher" type="text" class="form-control" placeholder="Brochure publisher" maxlength="100" />
                     </div>
                 </div>
                 <div class="col-md">
                     <div class="col-md">
                         <label for="count">Numbers Of Copies</label>
-                        <input type="number" class="form-control" placeholder="Numbers Of Copies" max="1000" formControlName="numbersOfCopies" required>
+                        <input required [(ngModel)]="brochure.numbersOfCopies" name="numbersOfCopies" type="text" class="form-control" placeholder="Numbers Of Copies"
+                               pattern="^[0-9]*$"
+                               maxlength="4" />
                     </div>
-
                     <div class="col-md">
                         <label for="country">Country</label>
-                        <input type="text" class="form-control" placeholder="Country" maxlength="50" formControlName="country" required>
+                        <input required [(ngModel)]="brochure.country" name="country" type="text" class="form-control" placeholder="Country" maxlength="50" />
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md">
                     <div class="col-md">
                         <label for="description">Description</label>
-                        <textarea cols="20" class="form-control" rows="5" maxlength="1000" formControlName="description"></textarea>
+                        <textarea [(ngModel)]="brochure.description" name="description" cols="20" class="form-control" rows="5" maxlength="1000"></textarea>
                     </div>
                 </div>
-
                 <div class="col-md-4 imageSelector">
                     <image-selector #imageInput [imagesHostPath]="imagesHostPath"></image-selector>
                 </div>
-
             </div>
-
             <div class="form-group">
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-success" value="{{isEdit?'Save Changes': 'Add new Brochure'}}" [disabled]="!form.valid"
-                />
+                <input type="submit" class="btn btn-success" value="{{isEdit?'Save Changes': 'Add new Brochure'}}" [disabled]="form.invalid" />
             </div>
         </div>
     </form>
