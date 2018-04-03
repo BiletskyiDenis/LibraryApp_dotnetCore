@@ -21,10 +21,7 @@ namespace LibraryApp.Controllers
         [HttpGet("RecentlyAdded/{type}")]
         public IActionResult RecentlyAdded(string type)
         {
-            AssetType assetType;
-            Enum.TryParse(type, true, out assetType);
-            var asset = _libraryDataService.GetAssetsFromType(assetType).DtoRecentlyAdded();
-
+            var asset = _libraryDataService.GetAssetsFromType(type).DtoRecentlyAdded();
             return Json(asset);
         }
 

@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApp", "LibraryApp\LibraryApp.csproj", "{68530532-EA82-4CC1-8AEB-6BBE683DC76F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApp.WebUI", "LibraryApp\LibraryApp.WebUI.csproj", "{68530532-EA82-4CC1-8AEB-6BBE683DC76F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{84A9F4B8-4B0E-4808-9FD9-B5D607E90E43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApp.BusinessLogic", "BusinessLogic\LibraryApp.BusinessLogic.csproj", "{84A9F4B8-4B0E-4808-9FD9-B5D607E90E43}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{7F102F10-B4A6-4DFA-82BF-4774988FB125}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApp.DataAccess", "DataAccess\LibraryApp.DataAccess.csproj", "{7F102F10-B4A6-4DFA-82BF-4774988FB125}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{FECB194D-DD5C-4841-BB0E-4BD35AE3AFF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApp.Domain", "Domain\LibraryApp.Domain.csproj", "{FECB194D-DD5C-4841-BB0E-4BD35AE3AFF2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "ViewModel\ViewModel.csproj", "{BF8317EE-E238-446C-AE8A-5F5052360549}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApp.ViewModel", "ViewModel\LibraryApp.ViewModel.csproj", "{BF8317EE-E238-446C-AE8A-5F5052360549}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

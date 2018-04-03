@@ -53,11 +53,11 @@ namespace LibraryApp.Controllers
                 return DownloadData(new DownloadFileModel { Id = selectedItems.Id[0], Type = selectedItems.Type });
             }
 
-            var tmpAssets = _libraryDataService.GetSelected(selectedItems.Id);
+            var assets = _libraryDataService.GetSelected(selectedItems.Id);
 
             var fileData = new byte[0];
 
-            fileData = _dataFileService.TryGetListDataFile(tmpAssets, selectedItems.Type);
+            fileData = _dataFileService.TryGetListDataFile(assets, selectedItems.Type);
 
             if (fileData == null)
             {

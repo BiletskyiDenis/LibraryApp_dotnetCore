@@ -26,36 +26,36 @@ namespace LibraryApp.Controllers
         [HttpPut]
         public virtual async Task<IActionResult> PostPut(string asset, IFormFileCollection file)
         {
-            var lbAsset = asset.DeserializeAsset<T>();
+            var libraryAsset = asset.DeserializeAsset<T>();
 
-            if (lbAsset.ImageUrl == string.Empty)
-                lbAsset.ImageUrl = "none";
+            if (libraryAsset.ImageUrl == string.Empty)
+                libraryAsset.ImageUrl = "none";
 
             if (file.Count != 0)
             {
-                if (lbAsset.Id == 0 || lbAsset.ImageUrl != "none")
+                if (libraryAsset.Id == 0 || libraryAsset.ImageUrl != "none")
                 {
-                    _imageService.DeleteImage(_appEnvironment.WebRootPath, lbAsset.ImageUrl);
+                    _imageService.DeleteImage(_appEnvironment.WebRootPath, libraryAsset.ImageUrl);
                 }
 
-                lbAsset.ImageUrl = _imageService.GenerateImageFileName(lbAsset.Title, lbAsset.Publisher, lbAsset.Year.ToString()) + ".jpg";
+                libraryAsset.ImageUrl = _imageService.GenerateImageFileName(libraryAsset.Title, libraryAsset.Publisher, libraryAsset.Year.ToString()) + ".jpg";
 
                 using (var image = new MemoryStream())
                 {
                     await file[0].CopyToAsync(image);
-                    await _imageService.UploadImage(image.ToArray(), lbAsset.ImageUrl, _appEnvironment.WebRootPath);
+                    await _imageService.UploadImage(image.ToArray(), libraryAsset.ImageUrl, _appEnvironment.WebRootPath);
                 }
             }
 
-            if (lbAsset.Id > 0)
+            if (libraryAsset.Id > 0)
             {
-                _libraryDataService.UpdateAsset(lbAsset);
+                _libraryDataService.UpdateAsset(libraryAsset);
                 _libraryDataService.SaveChanges();
 
                 return Ok();
             }
 
-            _libraryDataService.AddAsset(lbAsset);
+            _libraryDataService.AddAsset(libraryAsset);
             _libraryDataService.SaveChanges();
             return Ok();
         }

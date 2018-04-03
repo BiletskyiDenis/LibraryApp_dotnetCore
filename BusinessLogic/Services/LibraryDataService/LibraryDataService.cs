@@ -37,7 +37,7 @@ namespace BusinessLogic.services
                 {
                     Id = asset.Id,
                     Title = asset.Title,
-                    Author = _unitOfWork.Library.GetAuthor(asset.Id),
+                    Author = GetAuthor(asset.Id),
                     ImageUrl = asset.ImageUrl,
                     Price = asset.Price,
                     NumberOfCopies = asset.NumbersOfCopies,
@@ -67,6 +67,14 @@ namespace BusinessLogic.services
                 return journals;
             }
             return null;
+        }
+
+        public IEnumerable<LibraryAsset> GetAssetsFromType(string type)
+        {
+            AssetType assetType;
+            Enum.TryParse(type, true, out assetType);
+            var assets = GetAssetsFromType(assetType);
+            return assets;
         }
 
         public void RemoveAsset(LibraryAsset asset)
@@ -120,10 +128,53 @@ namespace BusinessLogic.services
             return typesList;
         }
 
+        public string GetAuthor(int id)
+        {
+            var asset = GetAsset(id) as Book;
+
+            if (asset == null)
+            {
+                return string.Empty;
+            }
+
+            return asset.Author;
+        }
+
+        public string GetFrequency(int id)
+        {
+            var asset = GetAsset(id) as Journal;
+            if (asset == null)
+            {
+                return string.Empty;
+            }
+            return asset.Frequency;
+        }
+
+        public string GetISBN(int id)
+        {
+            var asset = GetAsset(id) as Book;
+            if (asset == null)
+            {
+                return string.Empty;
+            }
+            return asset.ISBN;
+        }
+
+        public int GetPages(int id)
+        {
+            var asset = GetAsset(id) as Book;
+            if (asset == null)
+            {
+                return 0;
+            }
+            return asset.Pages;
+        }
+
         public void SaveChanges()
         {
             _unitOfWork.Complete();
         }
+
 
     }
 }
