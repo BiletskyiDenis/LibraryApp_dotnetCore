@@ -37,8 +37,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\LibraryApp.BusinessLogic.csproj" />
-    <ProjectReference Include="..\ViewModel\LibraryApp.ViewModel.csproj" />
+    <ProjectReference Include="..\LibraryApp.BusinessLogic\LibraryApp.BusinessLogic.csproj" />
+    <ProjectReference Include="..\LibraryApp.ViewModel\LibraryApp.ViewModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
