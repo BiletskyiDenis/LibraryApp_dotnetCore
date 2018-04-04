@@ -16,20 +16,20 @@ namespace BusinessLogic.services
     {
         public void RestoreDataFromFile(IFormFileCollection file, ILibraryDataService libraryDataService)
         {
-            var fileExt = Path.GetExtension(file[0].FileName);
+            var fileExtension = Path.GetExtension(file[0].FileName);
 
             using (var stream = new MemoryStream())
             {
                 file[0].CopyTo(stream);
                 byte[] data = stream.ToArray();
 
-                if (fileExt == ".xml")
+                if (fileExtension == ".xml")
                 {
                     RestoreAssetFromXml(data, libraryDataService);
                     return;
                 }
 
-                if (fileExt == ".txt")
+                if (fileExtension == ".txt")
                 {
                     RestoreAssetFromTxt(data, libraryDataService);
                     return;

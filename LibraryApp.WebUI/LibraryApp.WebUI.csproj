@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\app\modules\module.addUpdateAssets\addUpdateAssets.module.ts" />
     <None Remove="ClientApp\app\modules\module.mainUI\mainUI.module.ts" />
+    <None Remove="ClientApp\app\modules\module.upsertAssets\upsertAssets.module.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app\modules\module.addUpdateAssets\addUpdateAssets.module.ts" />
+    <TypeScriptCompile Include="ClientApp\app\modules\module.upsertAssets\upsertAssets.module.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\module.mainUI\mainUI.module.ts" />
   </ItemGroup>
 

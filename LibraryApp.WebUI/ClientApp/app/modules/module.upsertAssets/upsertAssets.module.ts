@@ -38,5 +38,5 @@ import { ImageSelectorComponent } from './components/image-selector/image-select
     providers: [LibraryService, ResourceService]
 })
 
-export class AddUpdateAssetsModule {
+export class UpsertAssetsModule {
 }
