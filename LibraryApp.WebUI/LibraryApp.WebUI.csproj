@@ -27,11 +27,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\app\modules\module.mainUI\mainUI.module.ts" />
+    <None Remove="ClientApp\app\modules\module.catalog\catalog.module.ts" />
+    <None Remove="ClientApp\app\modules\module.details\details.module.ts" />
+    <None Remove="ClientApp\app\modules\module.home\home.module.ts" />
     <None Remove="ClientApp\app\modules\module.upsertAssets\upsertAssets.module.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\app\modules\module.details\components\" />
     <Folder Include="wwwroot\img\assets\" />
     <Folder Include="wwwroot\img\assets_small\" />
   </ItemGroup>
@@ -42,8 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\modules\module.catalog\catalog.module.ts" />
+    <TypeScriptCompile Include="ClientApp\app\modules\module.details\details.module.ts" />
+    <TypeScriptCompile Include="ClientApp\app\modules\module.home\home.module.ts" />
     <TypeScriptCompile Include="ClientApp\app\modules\module.upsertAssets\upsertAssets.module.ts" />
-    <TypeScriptCompile Include="ClientApp\app\modules\module.mainUI\mainUI.module.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
